@@ -1,0 +1,14 @@
+# base image 생성
+FROM node:alpine
+
+# Work directory 지정
+WORKDIR /usr/src/app
+
+COPY package.json ./
+
+RUN npm install
+
+# 모든 파일 복사(node_modules 까지.. 복사할 필요는 없고 로컬의 node_modules를 삭제한다.)
+COPY ./ ./
+
+CMD ["npm", "run", "start"]
