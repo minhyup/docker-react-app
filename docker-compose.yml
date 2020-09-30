@@ -1,0 +1,13 @@
+# 버전을  항상 지정해줘야 한다.
+version: "3" # docker compose option
+services: # 실행하려는 컨테이너 정의
+  react: # 컨테이너이름
+    build: # 현재 디렉토리에 있는 Dockerfile 사용
+      context: . # 도커 이미지를 구성하기 위한 파일과 폴더들이 있는 위치
+      dockerfile: Dockerfile.dev # 도커 파일 지정
+    ports:
+      - "3000:3000" # 포트 매핑(호스트포트:컨테이너포트)
+    volumes: # 호스트 머신에 있는 파일 매핑
+      - /usr/src/app/node_modules # 이건 호스트 디렉토리를 참조히지 않음
+      - ./:/usr/src/app
+    stdin_open: true # 리액트 앱을 끌 때 필요(버그수정)
