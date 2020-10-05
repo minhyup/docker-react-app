@@ -1,7 +1,6 @@
 # 관리자 권한 갖기
 sudo: required
 
-
 # 언어 선택
 language: generic
 
@@ -21,3 +20,23 @@ script:
 # 테스트 성공 후 실행
 after_success:
   - echo "Test Success!"
+
+# 배포관련
+deploy:
+  # Travis CI에서 어떤 서비스와 연결할지 외부 서비스 표시(S3, Elastic beanstalk, firebase 등)
+  provider: elasticbeanstalk
+  # 현재 사용하고 있는 AWS의 서비스가 위치하고 있는 물리적 장소(ex: us-east-1)
+  region: "ap-northeast-2"
+  # 생성된 애플리케이션 이름
+  app: "docker-react-app"
+  # Elastic Beanstalk envirment
+  env: "DockerReactApp-env"
+  # 해당 Elastic beanstalk를 위한 S3 버킷이름 (travis에서 가지고 있는 파일을 압축해서 S3로 보낸다.)(ex:elasticbeanstalk-ap-northeast-2-813906163992)
+  bucket_name: "elasticbeanstalk-ap-northeast-2-813906163992"
+  # 애플리케이션 이름과 동일
+  bucket_path: "docker-react-app"
+  on:
+    # 어떤 브랜치에 push할 때 AWS에 배포할 것인지 판단을 위한 브랜치명
+    branch: master
+access_key_id: $AWS_ACCESS_KEY
+secret_access_key: $AWS_SECRET_ACCESS_KEY
